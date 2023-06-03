@@ -68,21 +68,17 @@ export default class RequestControl {
   /**
    * обновление задачи (объектов Task и TaskFull)
    */
-  static updateTask(id, name = "", description = "", status = "", callback) {
+  static updateTask(id, name = null, description = null, status = null) {
     const task = {
       name: name,
       description: description,
       status: status,
     };
     try {
-      createRequest(
-        `${this.HOST}/tasks/?id=${id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(task),
-        },
-        callback
-      );
+      createRequest(`${this.HOST}/tasks/?id=${id}`, {
+        method: "PUT",
+        body: JSON.stringify(task),
+      });
     } catch (e) {
       alert("Ошибка" + e.name + ":" + e.message);
     }
@@ -91,15 +87,11 @@ export default class RequestControl {
   /**
    * Метод удаления задачи
    */
-  static deleteTask(id, callback) {
+  static deleteTask(id) {
     try {
-      createRequest(
-        `${this.HOST}/tasks/?id=${id}`,
-        {
-          method: "DELETE",
-        },
-        callback
-      );
+      createRequest(`${this.HOST}/tasks/?id=${id}`, {
+        method: "DELETE",
+      });
     } catch (e) {
       alert("Ошибка" + e.name + ":" + e.message);
     }
