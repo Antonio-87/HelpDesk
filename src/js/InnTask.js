@@ -35,10 +35,10 @@ export default class InnTask {
     const innerHtml = RequestControl.getAllTasks(innerHTMLTask);
     this.#element.insertAdjacentHTML("afterbegin", innerHtml);
 
-    this.#element.addEventListener("click", this.onClick);
+    this.#element.addEventListener("click", this.onClickTask);
   }
 
-  onClick = (e) => {
+  onClickTask = (e) => {
     const target = e.target;
     const task = target.closest(".task");
     const id = task.getAttribute("id");
