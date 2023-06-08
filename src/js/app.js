@@ -12,5 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const innBoardTasks = new InnBoardTasks(board);
   innBoardTasks.bindToDom();
   const innFormWidget = new InnFormWidget(board);
+  innFormWidget.bindToDom();
   const innTask = new InnTask(innBoardTasks.tasks);
+
+  document.documentElement.addEventListener("click", innTask.onClickTask);
 });

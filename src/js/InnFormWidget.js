@@ -1,3 +1,6 @@
+import InnTask from "./InnTask";
+import RequestControl from "./requestControl";
+
 export default class InnFormWidget {
   #element;
   #form;
@@ -33,19 +36,56 @@ export default class InnFormWidget {
       this.#innTitle("Добавить задачу");
       this.#form.classList.remove("unvisible");
     }
-    this.#element.addEventListener("click", this.onClickForm);
+    this.#form.addEventListener("click", this.onClickForm);
+  }
+
+  static get title() {
+    return this.title.textContent;
   }
 
   onClickForm = (e) => {
+    e.preventDefault;
     const target = e.target;
-    if (target.classList.contains("add-task")) {
-      this.#innTitle(target.textContent);
-      this.#form.classList.remove("unvisible");
+    if (target === this.cancel) this.formVision(false);
+    if (target === this.ok) {
+      if (this.shortDescription === "" || this.longDescription === "") {
+        alert("Поля обязательны для заполнения!");
+        return;
+      }
+      if (InnFormWidget.title === "Добавить задачу") {
+        const { name, description } = this.#description();
+        RequestControl.createTask(name, description);
+        InnTask.addTasks();/**посмотреть контекст */
+      }
+      if (InnFormWidget.title === "Изменить задачу") {
+        const { name, description } = InnFormWidget.description();
+        RequestControl.updateTask(id, name, description);/**получить id задачи */
+        InnTask.addTasks();
+      }
     }
-    if (target === this.cancel) this.#form.classList.add("unvisible");
   };
 
   #innTitle(text) {
     this.title.textContent = text;
+  }
+
+  formVision(title = null, optionVision = true) {
+    this.#innTitle(title);
+    optionVision
+      ? this.#form.classList.remove("unvisible")
+      : this.#form.classList.add("unvisible");
+  }
+
+  #description() {
+    return {
+      name: this.shortDescription.value,
+      description: this.longDescription.value,
+    };
+  }
+
+  description(task) {
+    const { name, description } = task;
+    this.shortDescription.value = name;
+    this.longDescription.value = description;
   }
 }

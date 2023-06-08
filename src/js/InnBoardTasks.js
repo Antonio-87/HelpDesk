@@ -33,7 +33,5 @@ export default class InnBoardTasks {
       InnBoardTasks.tasksListSelector
     );
     this.tasks = this.element.querySelector(InnBoardTasks.tasksSelector);
-
-    // const innTask = new InnTask(this.tasks);
   }
 }

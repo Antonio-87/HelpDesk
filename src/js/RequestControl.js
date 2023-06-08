@@ -11,7 +11,7 @@ export default class RequestControl {
   /**
    * создание задачи (объектов Task и TaskFull)
    */
-  static createTask(name, description, status, callback) {
+  static createTask(name, description, status = false, callback) {
     const task = {
       name: name,
       description: description,

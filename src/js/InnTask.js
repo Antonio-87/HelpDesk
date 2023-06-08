@@ -1,4 +1,5 @@
 import RequestControl from "./requestControl";
+import InnFormWidget from "./InnFormWidget";
 
 export default class InnTask {
   #element;
@@ -6,10 +7,10 @@ export default class InnTask {
   constructor(element) {
     this.#element = element;
     this.#activeDescription = null;
-    this.addTasks(this.innerHtmlTask);
+    this.addTasks();
   }
 
-  innerHtmlTask(tasks) {
+  #innerHtmlTask(tasks) {
     if (tasks.length === 0) return;
     let tasksList = [];
     for (let task of tasks) {
@@ -31,11 +32,11 @@ export default class InnTask {
     return tasksList.join("");
   }
 
-  addTasks(innerHTMLTask) {
-    const innerHtml = RequestControl.getAllTasks(innerHTMLTask);
-    this.#element.insertAdjacentHTML("afterbegin", innerHtml);
+  addTasks() {
+    const innerHtml = RequestControl.getAllTasks(this.#innerHtmlTask);
+    this.#element.tasks.insertAdjacentHTML("afterbegin", innerHtml);
 
-    this.#element.addEventListener("click", this.onClickTask);
+    // this.#element.addEventListener("click", this.onClickTask);
   }
 
   onClickTask = (e) => {
@@ -50,14 +51,7 @@ export default class InnTask {
           description !== this.#activeDescription
         ) {
           this.#activeDescription.remove();
-          const innerHtml = RequestControl.getTask(
-            id,
-            this.innerHtmlDescription
-          );
-          task
-            .querySelector(".task-board")
-            .insertAdjacentHTML("beforeend", innerHtml);
-          this.#activeDescription = task.querySelector(".description");
+          this.#addTaskDescription(id, task);
         }
         if (
           this.#activeDescription &&
@@ -65,23 +59,46 @@ export default class InnTask {
         ) {
           this.#activeDescription.remove();
         }
+        if (!this.#activeDescription) this.#addTaskDescription(id, task);
       }
 
-    //   if (target.classList.contains("edit-task")) {
+      if (target.classList.contains("add-task")) {
+        InnFormWidget.formVision("Добавить задачу");
+      }
 
-    //   }
+      if (target.classList.contains("edit-task")) {
+        InnFormWidget.formVision("Изменить задачу");
+        RequestControl.getTask(id, InnFormWidget.description);
+      }
+
+      if (target.classList.contains("status-task")) {
+        if (target.classList.contains("selected")) {
+          RequestControl.updateTask(id, true);
+        } else {
+          RequestControl.updateTask(id, false);
+        }
+        this.addTasks();
+      }
 
       if (target.classList.contains("delete-task")) {
         RequestControl.deleteTask(id);
-        this.addTasks(this.innerHtmlTask);
+        this.addTasks();
       }
     }
   };
 
-  innerHtmlDescription(taskFull) {
+  #innerHtmlDescription(taskFull) {
     const p = document.createElement("p");
     p.classList.add("description");
     p.textContent = taskFull.description;
     return p.outerHTML;
+  }
+
+  #addTaskDescription(id, task) {
+    const innerHtml = RequestControl.getTask(id, this.#innerHtmlDescription);
+    task
+      .querySelector(".task-board")
+      .insertAdjacentHTML("beforeend", innerHtml);
+    this.#activeDescription = task.querySelector(".description");
   }
 }
