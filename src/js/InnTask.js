@@ -34,7 +34,7 @@ export default class InnTask {
 
   addTasks() {
     const innerHtml = RequestControl.getAllTasks(this.#innerHtmlTask);
-    this.#element.tasks.insertAdjacentHTML("afterbegin", innerHtml);
+    this.#element.insertAdjacentHTML("afterbegin", innerHtml);
 
     // this.#element.addEventListener("click", this.onClickTask);
   }
@@ -81,8 +81,9 @@ export default class InnTask {
       }
 
       if (target.classList.contains("delete-task")) {
-        RequestControl.deleteTask(id);
-        this.addTasks();
+        InnFormWidget.formVision("Удалить задачу");
+        InnFormWidget.descriptionVision();
+        RequestControl.getTask(id, InnFormWidget.description);
       }
     }
   };
