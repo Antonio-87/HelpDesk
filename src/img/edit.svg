@@ -62,7 +62,7 @@
       />
       <rect
           id="rect5338-48"
-          style="fill:#000200"
+          style="fill:gray"
           transform="matrix(-.26499 -.96425 .70711 -.70711 0 0)"
           rx="1.8358"
           ry="1.8187"
@@ -74,7 +74,7 @@
       <rect
           id="rect5338-4-2"
           ry="1.8187"
-          style="fill:#000200"
+          style="fill:gray"
           rx="1.377"
           transform="rotate(225)"
           height="53.819"
@@ -84,7 +84,7 @@
       />
       <rect
           id="rect5338-1-1"
-          style="fill:#000200"
+          style="fill:gray"
           transform="matrix(.96593 .25882 .70711 -.70711 0 0)"
           rx="1.836"
           ry="1.8187"
@@ -95,7 +95,7 @@
       />
       <path
           id="path5336-1-6"
-          style="stroke-linejoin:round;stroke:#000000;stroke-linecap:round;stroke-width:2.6122;fill:#000000"
+          style="stroke-linejoin:round;stroke:#000000;stroke-linecap:round;stroke-width:2.6122;fill:gray"
           inkscape:connector-curvature="0"
           d="m224.06 757.12 18.038-4.8199-13.219-13.219-4.8199 18.038z"
       />

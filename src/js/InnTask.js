@@ -15,7 +15,9 @@ export default class InnTask {
     let tasksList = [];
     for (let task of tasks) {
       const status =
-        task.status === false ? "status-task" : "status-task selected";
+        task.status === false
+          ? "status-task button"
+          : "status-task button selected";
       const html = `
         <li class="task" id="${task.id}">
           <div class=${status}></div>
@@ -23,8 +25,8 @@ export default class InnTask {
                   <p class="name">${task.name}</p>
               </div>
           <div class="time">${task.created}</div>
-          <div class="edit-task"></div>
-          <div class="delete-task"></div>
+          <div class="edit-task button"></div>
+          <div class="delete-task button"></div>
         </li>
       `;
       tasksList.push(html);

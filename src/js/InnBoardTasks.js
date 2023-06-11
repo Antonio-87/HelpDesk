@@ -9,7 +9,7 @@ export default class InnBoardTasks {
     return `
         <div class="add-task">Добавить задачу</div>
         <div class="tasks-list">
-            <ul class="tasks></ul>
+            <ul class="tasks"></ul>
         </div>
     `;
   }
