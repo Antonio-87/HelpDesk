@@ -7,23 +7,24 @@ export default class InnFormWidget {
   #taskId;
   constructor(element) {
     this.#element = element;
-    this.#form = document.forms.task;
     this.#taskId = null;
   }
 
   static get markup() {
     return `
-        <form class="" name "task">
-            <h2 name="title"></h2>
-            <div name="description-board">
-              <label for="short-description">Краткое описание:</label><br><br>
-              <input type="text" id="short-description" name="short-description"><br><br>
-              <label for="long-description">Подробное описание:</label><br><br>
+        <form class="" name="task">
+            <p class="title"></p>
+            <div class="description-board">
+              <label for="short-description">Краткое описание</label><br><br>
+              <input type="text" id="short-description" name="short-description" maxlength="89"><br><br>
+              <label for="long-description">Подробное описание</label><br><br>
               <textarea id="long-description" name="long-description"></textarea><br><br>
-              <button name="cancel">Отмена</button>
-              <button name="ok">Ок</button>
             </div>
-            <p class="unvisible" name="text-delete>Вы уверены, что хотите удалить задачу? Это действие необратимо.</p>
+            <p class="unvisible text-delete">Вы уверены, что хотите удалить задачу? Это действие необратимо.</p>
+            <div class="form-control">
+              <div class="form-button cancel">Отмена</div>
+              <div class="form-button ok">Ок</div>
+            </div>
         </form>
     `;
   }
@@ -31,13 +32,14 @@ export default class InnFormWidget {
   bindToDom() {
     this.#element.insertAdjacentHTML("beforeend", InnFormWidget.markup);
 
-    this.title = this.#form.elements.title;
-    this.descriptionBoard = this.#form.elements["description-board"];
-    this.textDelete = this.#form.elements["text-delete"];
+    this.#form = document.forms.task;
+    this.title = this.#form.querySelector(".title");
+    this.descriptionBoard = this.#form.querySelector(".description-board");
     this.shortDescription = this.#form.elements["short-description"];
     this.longDescription = this.#form.elements["long-description"];
-    this.cancel = this.#form.elements.cancel;
-    this.ok = this.#form.elements.ok;
+    this.textDelete = this.#form.querySelector(".text-delete");
+    this.cancel = this.#form.querySelector(".cancel");
+    this.ok = this.#form.querySelector(".ok");
 
     if (!document.querySelector(".task")) {
       this.#innTitle("Добавить задачу");

@@ -7,8 +7,8 @@
     margin: 100px auto;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 20px;
-    color: gray;
-    border: 1px solid gray;
+    color: rgb(62, 57, 57);
+    border: 1px solid black;
 }
 
 .add-task {
@@ -20,7 +20,7 @@
     line-height: 50px;
     top: -80px;
     right: 0;
-    border: 1px solid gray;
+    border: 1px solid black;
     border-radius: 15px;
 }
 
@@ -32,20 +32,23 @@
     list-style: none;
 }
 
-.tasks:nth-child(n+2) {
-    border-top: 1px solid gray;
-}
-
 .task {
     display: flex;
     flex-direction: row;
-    align-items: center;
     padding: 0 10px;
     justify-content: space-between;
     min-height: 50px;
 }
 
-p {
+.task:nth-child(n+2) {
+    border-top: 1px solid black;
+}
+
+.status-task {
+    margin-top: 13px;
+}
+
+.task-board {
     width: 600px;
 }
 
@@ -57,7 +60,12 @@ p {
     height: 35px;
 }
 
+.time {
+    margin-top: 20px;
+}
+
 .edit-task {
+    margin-top: 13px;
     background-image: url(../img/edit.svg);
     background-repeat: no-repeat;
     background-position: center;
@@ -65,6 +73,7 @@ p {
 }
 
 .delete-task {
+    margin-top: 13px;
     background-image: url(../img/close.svg);
     background-repeat: no-repeat;
     background-position: center;
@@ -78,4 +87,58 @@ p {
 
 .unvisible {
     display: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    padding: 0 20px 20px;
+    left: 18%;
+    top: -10px;
+    width: 60%;
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: white;
+    z-index: 999;
+}
+
+.title {
+    text-align: center;
+}
+
+input {
+    width: 99%;
+    height: 30px;
+    border: none;
+    border: 1px solid black;
+}
+
+textarea {
+    width: 99%;
+    min-height: 70px;
+    border: none;
+    border: 1px solid black;
+    resize: none;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.form-button {
+    display: inline-block;
+    padding: 0 20px;
+    margin-left: 20px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.text-delete {
+    width: 60%;
 }
