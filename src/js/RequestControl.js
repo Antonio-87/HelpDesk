@@ -1,31 +1,25 @@
-/**
- * Класс Yandex
- * Используется для управления облаком.
- * Имеет свойство HOST
- * */
 import createRequest from "./createRequest";
 
 export default class RequestControl {
-  static HOST = "https://localhost:8080/";
+  static HOST = "http://localhost:8080";
 
   /**
    * создание задачи (объектов Task и TaskFull)
    */
-  static createTask(name, description, status = false, callback) {
+  static createTask(name, description, status = false) {
     const task = {
       name: name,
       description: description,
       status: status,
     };
     try {
-      createRequest(
-        `${this.HOST}/createTask/`,
-        {
-          method: "POST",
-          body: JSON.stringify(task),
+      createRequest(`${this.HOST}/createTask/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
         },
-        callback
-      );
+        body: JSON.stringify(task),
+      });
     } catch (e) {
       alert("Ошибка" + e.name + ":" + e.message);
     }
@@ -54,7 +48,7 @@ export default class RequestControl {
   static getTask(id, callback) {
     try {
       createRequest(
-        `${this.HOST}/tasks/?id=${id}`,
+        `${this.HOST}/tasks/${id}`,
         {
           method: "GET",
         },

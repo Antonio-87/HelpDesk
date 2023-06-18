@@ -1,18 +1,20 @@
-import InnTask from "./InnTask";
-import RequestControl from "./requestControl";
+// import InnTask from "./InnTask";
+// import RequestControl from "./requestControl";
 
 export default class InnFormWidget {
   #element;
   #form;
-  #taskId;
+  // #taskId;
+  // #innTask;
   constructor(element) {
     this.#element = element;
-    this.#taskId = null;
+    // this.#innTask = new InnTask(element);
+    this.taskId = null;
   }
 
   static get markup() {
     return `
-        <form class="" name="task">
+        <form class="unvisible" name="task">
             <p class="title"></p>
             <div class="description-board">
               <label for="short-description">Краткое описание</label><br><br>
@@ -41,81 +43,85 @@ export default class InnFormWidget {
     this.cancel = this.#form.querySelector(".cancel");
     this.ok = this.#form.querySelector(".ok");
 
-    if (!document.querySelector(".task")) {
-      this.#innTitle("Добавить задачу");
-      this.#form.classList.remove("unvisible");
-    }
-    this.#form.addEventListener("click", this.onClickForm);
+    // if (!document.querySelector(".task")) {
+    //   this.#innTitle("Добавить задачу");
+    //   this.#form.classList.remove("unvisible");
+    // }
+    // this.#form.addEventListener("click", this.onClickForm);
   }
 
-  static get title() {
-    return this.title.textContent;
-  }
+  // onClickForm = (e) => {
+  //   e.preventDefault;
+  //   const target = e.target;
+  //   if (target === this.cancel) {
+  //     this.formVision();
+  //     if (this.title.textContent === "Удалить задачу") {
+  //       InnFormWidget.descriptionVision();
+  //     }
+  //   }
+  //   if (target === this.ok) {
+  //     if (
+  //       this.shortDescription.value === "" ||
+  //       this.longDescription.value === ""
+  //     ) {
+  //       alert("Поля обязательны для заполнения!");
+  //       return;
+  //     }
+  //     if (this.title.textContent === "Добавить задачу") {
+  //       const { name, description } = this.#description();
+  //       RequestControl.createTask(name, description);
+  //       this.formVision();
+  //       InnTask.addTasks();
+  //     }
+  //     if (InnFormWidget.title === "Изменить задачу") {
+  //       const { name, description } = this.#description();
+  //       RequestControl.updateTask(this.#taskId, name, description);
+  //       this.formVision();
+  //       InnTask.addTasks();
+  //     }
+  //     if (InnFormWidget.title === "Удалить задачу") {
+  //       RequestControl.deleteTask(this.#taskId);
+  //       this.formVision();
+  //       InnFormWidget.descriptionVision();
+  //       InnTask.addTasks();
+  //     }
+  //   }
+  // };
 
-  onClickForm = (e) => {
-    e.preventDefault;
-    const target = e.target;
-    if (target === this.cancel) {
-      this.formVision(false);
-      if (InnFormWidget.title === "Удалить задачу") {
-        InnFormWidget.descriptionVision();
-      }
-    }
-    if (target === this.ok) {
-      if (this.shortDescription === "" || this.longDescription === "") {
-        alert("Поля обязательны для заполнения!");
-        return;
-      }
-      if (InnFormWidget.title === "Добавить задачу") {
-        const { name, description } = this.#description();
-        RequestControl.createTask(name, description);
-        this.formVision(false);
-        InnTask.addTasks();
-      }
-      if (InnFormWidget.title === "Изменить задачу") {
-        const { name, description } = this.#description();
-        RequestControl.updateTask(this.#taskId, name, description);
-        this.formVision(false);
-        InnTask.addTasks();
-      }
-      if (InnFormWidget.title === "Удалить задачу") {
-        RequestControl.deleteTask(this.#taskId);
-        this.formVision(false);
-        InnFormWidget.descriptionVision();
-        InnTask.addTasks();
-      }
-    }
-  };
+  firstOpenForm() {
+    this.#innTitle("Добавить задачу");
+    this.#form.classList.remove("unvisible");
+  }
 
   #innTitle(text) {
     this.title.textContent = text;
   }
 
-  formVision(title = null, optionVision = true) {
-    this.#innTitle(title);
-    optionVision
-      ? this.#form.classList.remove("unvisible")
-      : this.#form.classList.add("unvisible");
+  formVision(title) {
+    if (title) {
+      this.#innTitle(title);
+      this.#form.classList.remove("unvisible");
+    } else {
+      this.#form.classList.add("unvisible");
+    }
   }
 
-  #description() {
+  getDescription() {
     return {
       name: this.shortDescription.value,
       description: this.longDescription.value,
     };
   }
 
-  /**
-   * @param {{ id: any; name: any; description: any; }} task
-   */
-  static set description(task) {
+  // eslint-disable-next-line no-dupe-class-members
+  description(task) {
     const { id, name, description } = task;
-    this.#taskId = id;
+    this.taskId = id;
     this.shortDescription.value = name;
     this.longDescription.value = description;
   }
 
-  static descriptionVision() {
+  descriptionVision() {
     this.descriptionBoard.classList.toggle("unvisible");
     this.textDelete.classList.toggle("unvisible");
   }
