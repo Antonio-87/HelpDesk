@@ -1,15 +1,10 @@
-// import InnTask from "./InnTask";
-// import RequestControl from "./requestControl";
-
 export default class InnFormWidget {
   #element;
   #form;
-  // #taskId;
-  // #innTask;
   constructor(element) {
     this.#element = element;
-    // this.#innTask = new InnTask(element);
     this.taskId = null;
+    this.description = this.description.bind(this);
   }
 
   static get markup() {
@@ -42,51 +37,7 @@ export default class InnFormWidget {
     this.textDelete = this.#form.querySelector(".text-delete");
     this.cancel = this.#form.querySelector(".cancel");
     this.ok = this.#form.querySelector(".ok");
-
-    // if (!document.querySelector(".task")) {
-    //   this.#innTitle("Добавить задачу");
-    //   this.#form.classList.remove("unvisible");
-    // }
-    // this.#form.addEventListener("click", this.onClickForm);
   }
-
-  // onClickForm = (e) => {
-  //   e.preventDefault;
-  //   const target = e.target;
-  //   if (target === this.cancel) {
-  //     this.formVision();
-  //     if (this.title.textContent === "Удалить задачу") {
-  //       InnFormWidget.descriptionVision();
-  //     }
-  //   }
-  //   if (target === this.ok) {
-  //     if (
-  //       this.shortDescription.value === "" ||
-  //       this.longDescription.value === ""
-  //     ) {
-  //       alert("Поля обязательны для заполнения!");
-  //       return;
-  //     }
-  //     if (this.title.textContent === "Добавить задачу") {
-  //       const { name, description } = this.#description();
-  //       RequestControl.createTask(name, description);
-  //       this.formVision();
-  //       InnTask.addTasks();
-  //     }
-  //     if (InnFormWidget.title === "Изменить задачу") {
-  //       const { name, description } = this.#description();
-  //       RequestControl.updateTask(this.#taskId, name, description);
-  //       this.formVision();
-  //       InnTask.addTasks();
-  //     }
-  //     if (InnFormWidget.title === "Удалить задачу") {
-  //       RequestControl.deleteTask(this.#taskId);
-  //       this.formVision();
-  //       InnFormWidget.descriptionVision();
-  //       InnTask.addTasks();
-  //     }
-  //   }
-  // };
 
   firstOpenForm() {
     this.#innTitle("Добавить задачу");
@@ -113,9 +64,8 @@ export default class InnFormWidget {
     };
   }
 
-  // eslint-disable-next-line no-dupe-class-members
-  description(task) {
-    const { id, name, description } = task;
+  description(object) {
+    const { id, name, description } = object.taskFull;
     this.taskId = id;
     this.shortDescription.value = name;
     this.longDescription.value = description;
@@ -124,5 +74,10 @@ export default class InnFormWidget {
   descriptionVision() {
     this.descriptionBoard.classList.toggle("unvisible");
     this.textDelete.classList.toggle("unvisible");
+  }
+
+  descriptionDelete() {
+    this.shortDescription.value = "";
+    this.longDescription.value = "";
   }
 }

@@ -1,15 +1,13 @@
 import RequestControl from "./requestControl";
-// import InnFormWidget from "./InnFormWidget";
 
 export default class InnTask {
   #element;
-  // #activeDescription;
   constructor(element) {
     this.#element = element;
     this.activeDescription = null;
-    // this.form = null;
-    // this.addTasks();
+    this.taskActiv = null;
     this.innerHtmlTask = this.#innerHtmlTask.bind(this);
+    this.innerHtmlDescription = this.#innerHtmlDescription.bind(this);
   }
 
   #innerHtmlTask(object) {
@@ -41,11 +39,6 @@ export default class InnTask {
 
   addTasks() {
     RequestControl.getAllTasks(this.innerHtmlTask);
-
-    // if (innerHtml !== undefined) {
-    // this.#element.insertAdjacentHTML("beforeend", innerHtml);
-    // }
-    // this.#element.addEventListener("click", this.onClickTask);
   }
 
   #removeTasks() {
@@ -56,65 +49,18 @@ export default class InnTask {
     });
   }
 
-  // onClickTask = (e) => {
-  //   const target = e.target;
-  //   const task = target.closest(".task");
-  //   if (target.classList.contains("add-task")) {
-  //     this.form.formVision("Добавить задачу");
-  //   }
-  //   if (task) {
-  //     const id = task.getAttribute("id");
-  //     const description = task.querySelector(".description");
-  //     if (target.classList.contains("name")) {
-  //       if (
-  //         this.#activeDescription &&
-  //         description !== this.#activeDescription
-  //       ) {
-  //         this.#activeDescription.remove();
-  //         this.#addTaskDescription(id, task);
-  //       }
-  //       if (
-  //         this.#activeDescription &&
-  //         description === this.#activeDescription
-  //       ) {
-  //         this.#activeDescription.remove();
-  //       }
-  //       if (!this.#activeDescription) this.#addTaskDescription(id, task);
-  //     }
-  //     if (target.classList.contains("edit-task")) {
-  //       InnFormWidget.formVision("Изменить задачу");
-  //       RequestControl.getTask(id, InnFormWidget.description);
-  //     }
-
-  //     if (target.classList.contains("status-task")) {
-  //       if (target.classList.contains("selected")) {
-  //         RequestControl.updateTask(id, true);
-  //       } else {
-  //         RequestControl.updateTask(id, false);
-  //       }
-  //       this.addTasks();
-  //     }
-
-  //     if (target.classList.contains("delete-task")) {
-  //       InnFormWidget.formVision("Удалить задачу");
-  //       InnFormWidget.descriptionVision();
-  //       RequestControl.getTask(id, InnFormWidget.description);
-  //     }
-  //   }
-  // };
-
-  innerHtmlDescription(taskFull) {
+  #innerHtmlDescription(object) {
     const p = document.createElement("p");
     p.classList.add("description");
-    p.textContent = taskFull.description;
-    return p.outerHTML;
-  }
-
-  addTaskDescription(id, task) {
-    const innerHtml = RequestControl.getTask(id, this.innerHtmlDescription);
-    task
+    p.textContent = object.taskFull.description;
+    const innerHtml = p.outerHTML;
+    this.taskActiv
       .querySelector(".task-board")
       .insertAdjacentHTML("beforeend", innerHtml);
-    this.activeDescription = task.querySelector(".description");
+    this.activeDescription = this.taskActiv.querySelector(".description");
+  }
+
+  addTaskDescription(id) {
+    RequestControl.getTask(id, this.innerHtmlDescription);
   }
 }

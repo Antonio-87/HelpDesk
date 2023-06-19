@@ -9,15 +9,8 @@ import Controller from "./Controller";
 
 const board = document.querySelector(".board-tasks");
 
-document.addEventListener("DOMContentLoaded", async () => {
-  // const innBoardTasks = new InnBoardTasks(board);
-  // innBoardTasks.bindToDom();
-  // const innTask = new InnTask(innBoardTasks.tasks);
-  // const innFormWidget = new InnFormWidget(board);
-  // innFormWidget.bindToDom();
+document.addEventListener("DOMContentLoaded", () => {
   const controller = new Controller(board);
 
   board.addEventListener("click", controller.onClick);
 });
-
-// document.documentElement.addEventListener("click", innTask.onClickTask);

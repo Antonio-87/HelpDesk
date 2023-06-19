@@ -22,7 +22,7 @@ export default class Controller {
         if (!document.querySelector(".task")) {
           this.#form.firstOpenForm();
         }
-      }, 3000);
+      }, 1000);
     })();
   }
 
@@ -33,6 +33,7 @@ export default class Controller {
       this.#form.formVision("Добавить задачу");
     }
     if (task) {
+      this.#task.taskActiv = task;
       const id = task.getAttribute("id");
       const description = task.querySelector(".description");
       if (target.classList.contains("name")) {
@@ -41,7 +42,7 @@ export default class Controller {
           description !== this.#task.activeDescription
         ) {
           this.#task.activeDescription.remove();
-          this.#task.addTaskDescription(id, task);
+          this.#task.addTaskDescription(id);
         }
         if (
           this.#task.activeDescription &&
@@ -49,8 +50,7 @@ export default class Controller {
         ) {
           this.#task.activeDescription.remove();
         }
-        if (!this.#task.activeDescription)
-          this.#task.addTaskDescription(id, task);
+        if (!this.#task.activeDescription) this.#task.addTaskDescription(id);
       }
       if (target.classList.contains("edit-task")) {
         this.#form.formVision("Изменить задачу");
@@ -58,10 +58,10 @@ export default class Controller {
       }
 
       if (target.classList.contains("status-task")) {
-        if (target.classList.contains("selected")) {
-          RequestControl.updateTask(id, true);
+        if (!target.classList.contains("selected")) {
+          RequestControl.updateTask(id, null, null, true);
         } else {
-          RequestControl.updateTask(id, false);
+          RequestControl.updateTask(id, null, null, false);
         }
         this.#task.addTasks();
       }
@@ -73,6 +73,7 @@ export default class Controller {
       }
     }
     if (target === this.#form.cancel) {
+      this.#form.descriptionDelete();
       this.#form.formVision();
       if (this.#form.title.textContent === "Удалить задачу") {
         this.#form.descriptionVision();
@@ -80,8 +81,9 @@ export default class Controller {
     }
     if (target === this.#form.ok) {
       if (
-        this.#form.shortDescription.value === "" ||
-        this.#form.longDescription.value === ""
+        this.#form.textDelete.classList.contains("unvisible") &&
+        (this.#form.shortDescription.value === "" ||
+          this.#form.longDescription.value === "")
       ) {
         alert("Поля обязательны для заполнения!");
         return;
@@ -104,6 +106,7 @@ export default class Controller {
         this.#form.descriptionVision();
         this.#task.addTasks();
       }
+      this.#form.descriptionDelete();
     }
   };
 }

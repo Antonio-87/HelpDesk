@@ -69,8 +69,11 @@ export default class RequestControl {
       status: status,
     };
     try {
-      createRequest(`${this.HOST}/tasks/?id=${id}`, {
+      createRequest(`${this.HOST}/tasks/${id}`, {
         method: "PUT",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
         body: JSON.stringify(task),
       });
     } catch (e) {
@@ -83,7 +86,7 @@ export default class RequestControl {
    */
   static deleteTask(id) {
     try {
-      createRequest(`${this.HOST}/tasks/?id=${id}`, {
+      createRequest(`${this.HOST}/tasks/${id}`, {
         method: "DELETE",
       });
     } catch (e) {

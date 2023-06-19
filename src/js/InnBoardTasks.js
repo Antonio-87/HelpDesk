@@ -1,5 +1,3 @@
-// import InnTask from "./InnTask";
-
 export default class InnBoardTasks {
   constructor(element) {
     this.element = element;
