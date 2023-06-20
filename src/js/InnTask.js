@@ -35,10 +35,14 @@ export default class InnTask {
     }
     const htmlList = tasksList.join("");
     this.#element.insertAdjacentHTML("beforeend", htmlList);
+    this.#removeLoader();
   }
 
   addTasks() {
-    RequestControl.getAllTasks(this.innerHtmlTask);
+    this.#innerLoader();
+    setTimeout(() => {
+      RequestControl.getAllTasks(this.innerHtmlTask);
+    }, 1000);
   }
 
   #removeTasks() {
@@ -62,5 +66,14 @@ export default class InnTask {
 
   addTaskDescription(id) {
     RequestControl.getTask(id, this.innerHtmlDescription);
+  }
+
+  #innerLoader() {
+    const loader = document.body.appendChild(document.createElement("div"));
+    loader.classList.add("loader");
+    this.loader = loader;
+  }
+  #removeLoader() {
+    this.loader.remove();
   }
 }

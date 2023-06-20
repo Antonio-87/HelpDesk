@@ -22,7 +22,7 @@ export default class Controller {
         if (!document.querySelector(".task")) {
           this.#form.firstOpenForm();
         }
-      }, 1000);
+      }, 2000);
     })();
   }
 
