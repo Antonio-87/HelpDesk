@@ -1,4 +1,4 @@
-import RequestControl from "./requestControl";
+import RequestControl from "./RequestControl";
 import InnFormWidget from "./InnFormWidget";
 import InnTask from "./InnTask";
 import InnBoardTasks from "./InnBoardTasks";

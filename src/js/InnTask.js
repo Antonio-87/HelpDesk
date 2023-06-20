@@ -1,4 +1,4 @@
-import RequestControl from "./requestControl";
+import RequestControl from "./RequestControl";
 
 export default class InnTask {
   #element;
