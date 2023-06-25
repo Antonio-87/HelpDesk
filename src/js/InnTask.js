@@ -12,7 +12,11 @@ export default class InnTask {
 
   #innerHtmlTask(object) {
     console.log(object);
-    if (object.tasks.length === 0) return;
+    if (object.tasks.length === 0) {
+      this.#removeTasks();
+      this.#removeLoader();
+      return;
+    }
     this.#removeTasks();
     let tasksList = [];
     for (let task of object.tasks) {
